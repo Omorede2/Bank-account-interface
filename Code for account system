@@ -1,0 +1,126 @@
+package com.company;
+import java.util.Scanner;
+
+public class userAccount {
+    //List of Variables
+    int balance; //Holds the balance
+    int prevTransaction; //holds and shows the previous balance
+    String userName; //Current username
+    String userID; //Current userID
+
+    //Gets userID and Name.
+    userAccount(String uName, String uID){
+        userName = uName;
+        userID = uID;
+    }
+
+    //Depositing Method
+    void deposit(int deposit){
+        if (deposit != 0) {
+            balance = balance + deposit;
+            prevTransaction = deposit;
+        }
+    }
+
+    //Withdrawing Method
+    void withdraw(int withDraw) {
+        if(withDraw != 0){
+            balance = balance - withDraw;
+            prevTransaction = -withDraw;
+        }
+    }
+
+    //Method to show the Previous transaction
+    void getPrevTrans(){
+        if (prevTransaction > 0){
+            System.out.println("Current Deposited: " + prevTransaction);
+        } else if (prevTransaction < 0) {
+            System.out.println("Balance Withdrawn: " + Math.abs(prevTransaction));
+        } else {
+            System.out.println("no Transaction have taken place");
+        }
+    }
+
+    //this method will get the interest
+    void getInterest(int yearAmount){
+        double rateOfInterest = .0105;
+        double newBal = (balance * rateOfInterest * yearAmount) + balance;
+        System.out.println("Rate of interest is " + (100 * rateOfInterest) + "%");
+        System.out.println("After " + yearAmount + " years, the balance will increase to: " + newBal);
+    }
+
+    //Main Menu code/Method
+
+    void showMenu() {
+        char option = '\0';
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome, " + userName + "!");
+        System.out.println("Your ID is: " + userID);
+        System.out.println();
+        System.out.println("What would you like to do?");
+        System.out.println();
+        System.out.println("A. Check your balance");
+        System.out.println("B. Make a deposit");
+        System.out.println("C. Make a withdrawal");
+        System.out.println("D. View previous transaction");
+        System.out.println("E. Calculate interest");
+        System.out.println("F. Exit");
+
+        do {
+            System.out.println();
+            System.out.println("Enter an option: ");
+            char option1 = scanner.next().charAt(0);
+            option = Character.toUpperCase(option1);
+            System.out.println();
+
+            switch(option) {
+                //Case 'A'
+                case 'A':
+                    System.out.println("====================================");
+                    System.out.println("Balance = $" + balance);
+                    System.out.println("====================================");
+                    System.out.println();
+                    break;
+                //Case 'B'
+                case 'B':
+                    System.out.println("Enter an amount to deposit: ");
+                    int amount = scanner.nextInt();
+                    deposit(amount);
+                    System.out.println();
+                    break;
+                //Case 'C'
+                case 'C':
+                    System.out.println("Enter an amount to withdraw: ");
+                    int amount2 = scanner.nextInt();
+                    withdraw(amount2);
+                    System.out.println();
+                    break;
+                //Case 'D'
+                case 'D':
+                    System.out.println("====================================");
+                    getPrevTrans();
+                    System.out.println("====================================");
+                    System.out.println();
+                    break;
+                //Case 'E'
+                case 'E':
+                    System.out.println("Enter how many years of accrued interest: ");
+                    int years = scanner.nextInt();
+                    getInterest(years);
+                    break;
+                //Case 'F'
+                case 'F':
+                    System.out.println("====================================");
+                    break;
+                //Toss error
+                default:
+                    System.out.println("Error: invalid option. Please enter A, B, C, D, or E or access services.");
+                    break;
+            }
+        } while(option != 'F');
+        System.out.println("You are now log off, Thank you for banking with us!");
+    }
+
+
+
+}
